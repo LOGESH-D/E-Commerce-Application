@@ -10,6 +10,7 @@ import AdminHome from "./pages/admin/AdminHome.jsx";
 import DriverHome from "./pages/driver/DriverHome.jsx";
 import PartnerHome from "./pages/partner/PartnerHome.jsx";
 
+import UserProducts from "./pages/user/Products";
 import Cart from "./pages/user/Cart.jsx";
 import Checkout from "./pages/user/Checkout.jsx";
 import Orders from "./pages/user/Orders.jsx";
@@ -56,6 +57,14 @@ const App = () => {
           element={
             <ProtectedRoute role="admin">
               <AdminHome />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/products"
+          element={
+            <ProtectedRoute role="user">
+              <UserProducts />
             </ProtectedRoute>
           }
         />

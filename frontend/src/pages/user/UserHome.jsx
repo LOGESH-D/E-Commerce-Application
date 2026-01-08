@@ -1,15 +1,15 @@
-import { React, useEffect, useState, useContext } from "react";
+import { React, useEffect, useState } from "react";
 import api from "../../api/axios.js";
-import { CartContext } from "../../context/CartContext.jsx";
+import { useCart } from "../../context/CartContext.jsx";
 import { Button, Card, CardContent } from "@mui/material";
 
 const UserHome = () => {
   const [products, setProducts] = useState([]);
-  const { addToCart } = useContext(CartContext);
+  const { addToCart } = useCart();
   useEffect(() => {
     const fetchProducts = async () => {
       const res = await api.get("/products");
-      setProducts(res.data.products);
+      setProducts(res.data);
     };
     fetchProducts();
   }, []);

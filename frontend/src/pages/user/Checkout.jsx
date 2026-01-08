@@ -1,11 +1,11 @@
-import { useContext, useState } from "react";
-import { CartContext } from "../../context/CartContext";
+import { useState } from "react";
+import { useCart } from "../../context/CartContext";
 import api from "../../api/axios";
 import { TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
-  const { cart, setCart } = useContext(CartContext);
+  const { cartItems, clearCart } = useCart();
   const navigate = useNavigate();
 
   const [address, setAddress] = useState("");
@@ -20,7 +20,7 @@ const Checkout = () => {
     }
 
     const orderData = {
-      products: cart.map((item) => ({
+      products: cartItems.map((item) => ({
         productId: item._id,
         quantity: item.qty,
       })),
@@ -35,7 +35,7 @@ const Checkout = () => {
       setLoading(true);
       await api.post("/orders", orderData);
       localStorage.removeItem("cart");
-      setCart([]);
+      clearCart();
       navigate("/orders");
     } catch (error) {
       alert(error.response?.data?.message || "Order failed");
@@ -44,7 +44,7 @@ const Checkout = () => {
     }
   };
 
-  if (cart.length === 0) {
+  if (cartItems.length === 0) {
     return <h2 className="p-6">Cart is empty</h2>;
   }
 
